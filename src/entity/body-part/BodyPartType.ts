@@ -14,6 +14,7 @@ export enum BodyPartType {
   Digit = 'digit',
   Claw = 'claw',
   Wing = 'wing',
+  Membrane = 'membrane',
   Tail = 'tail',
   Tentacle = 'tentacle',
   Crotch = 'crotch',

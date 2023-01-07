@@ -1,6 +1,13 @@
 import { BodyPartType } from './BodyPartType';
 import { BodyPartQuery } from './query';
-import { Shape, ShapeData } from '../../materials/shape/Shape';
+import {
+  Shape,
+  ShapeData,
+  Wearable,
+  WearableData,
+  Liquid,
+  LiquidData,
+} from '../../materials';
 
 export class BodyPart extends Shape {
   static readonly Type: typeof BodyPartType = BodyPartType;
@@ -8,12 +15,18 @@ export class BodyPart extends Shape {
   readonly parts: BodyPart[];
   type: BodyPartType;
   tag: string | undefined;
+  colors: string[];
+  wearables: Wearable[];
+  stains: Liquid[];
 
   constructor(data: BodyPartData) {
     super(data);
 
     this.parts = data.parts?.map(part => new BodyPart(part)) || [];
+    this.wearables = data.wearables?.map(Wearable.create) || [];
+    this.stains = data.stains?.map(stain => new Liquid(stain)) || [];
     this.type = data.type;
+    this.colors = data.colors;
     this.tag = data.tag;
   }
 
@@ -64,8 +77,11 @@ export class BodyPart extends Shape {
 
 export interface BodyPartData extends ShapeData {
   type: BodyPartType;
+  colors: string[];
   parts?: BodyPartData[] | undefined;
   tag?: string | undefined;
+  wearables?: WearableData[] | undefined;
+  stains?: LiquidData[] | undefined;
 }
 
 export type TryQueryResult<T> = (
