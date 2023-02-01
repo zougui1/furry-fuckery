@@ -1,17 +1,23 @@
-import { BodyPartType } from './BodyPartType';
+import { constructionDataSchema } from './schemas';
 import { BodyPartQuery } from './query';
+import { BodyPartType } from './BodyPartType';
 import {
   Shape,
   ShapeData,
+  Size,
   Wearable,
   WearableData,
   Liquid,
   LiquidData,
 } from '../../materials';
 
-export class BodyPart extends Shape {
-  static readonly Type: typeof BodyPartType = BodyPartType;
+export class BodyPart {
+  static readonly Type = BodyPartType;
+  static readonly schemas = {
+    constructionData: constructionDataSchema,
+  } as const;
 
+  readonly shape: Shape;
   readonly parts: BodyPart[];
   type: BodyPartType;
   tag: string | undefined;
@@ -20,8 +26,7 @@ export class BodyPart extends Shape {
   stains: Liquid[];
 
   constructor(data: BodyPartData) {
-    super(data);
-
+    this.shape = new Shape(data);
     this.parts = data.parts?.map(part => new BodyPart(part)) || [];
     this.wearables = data.wearables?.map(Wearable.create) || [];
     this.stains = data.stains?.map(stain => new Liquid(stain)) || [];
@@ -36,18 +41,22 @@ export class BodyPart extends Shape {
   }
 
   tryQuery<T>(buildQuery: (query: BodyPartQuery) => T): TryQueryResult<T> {
+    const query = this.query();
+
     try {
-      const result = buildQuery(this.query());
+      const result = buildQuery(query);
       return [null, result];
     } catch (error) {
       if (BodyPartQuery.Error.is(error)) {
         return [error, null];
       }
 
-      const queryError = new BodyPartQuery.Error({
+      const queryError = query.createError({
         message: 'Body part not found',
         code: BodyPartQuery.Error.Code.Unknown,
+        cause: error,
       });
+
       return [queryError, null];
     }
   }
@@ -67,12 +76,22 @@ export class BodyPart extends Shape {
   }
   //#endregion
 
-  allParts(): BodyPart[] {
+  getAllParts(): BodyPart[] {
     return [
       ...this.parts,
-      ...this.parts.flatMap(part => part.allParts()),
+      ...this.parts.flatMap(part => part.getAllParts()),
     ];
   }
+
+  //#region shape accessors
+  get width(): Size {
+    return this.shape.width;
+  }
+
+  get length(): Size {
+    return this.shape.length;
+  }
+  //#endregion
 }
 
 export interface BodyPartData extends ShapeData {

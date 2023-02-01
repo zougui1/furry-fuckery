@@ -1,6 +1,11 @@
-import { Gender, Species, Sexuality, Pronouns, pronouns } from '../data';
+import { constructionDataSchema } from './schemas';
+import { Gender, Species, Sexuality, Pronouns, pronouns } from '../../data';
 
 export class Identity {
+  static readonly schemas = {
+    constructionData: constructionDataSchema,
+  } as const;
+
   name: string;
   gender: Gender;
   pronouns: Pronouns;

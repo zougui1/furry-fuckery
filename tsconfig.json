@@ -18,13 +18,10 @@
     "noFallthroughCasesInSwitch": true,
     "noEmitOnError": true,
     "moduleResolution": "node",
-    "lib": [
-      "ES2022.Error",
-      "esnext"
-    ],
     "rootDir": "src",
     "outDir": "lib",
-    "target": "es2017"
+    "target": "ESNext",
+    "types": ["jest"]
   },
   "include": ["src/**/*.ts"],
   "exclude": ["src/**/*.spec.*"]

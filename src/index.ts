@@ -1,1 +1,1 @@
-import './test/entity';
+import './test/criteria';

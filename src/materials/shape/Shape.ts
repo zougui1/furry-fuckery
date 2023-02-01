@@ -1,6 +1,11 @@
+import { constructionDataSchema } from './schemas';
 import { Size, SizeString } from '../size';
 
 export class Shape {
+  static readonly schemas = {
+    constructionData: constructionDataSchema,
+  } as const;
+
   length: Size;
   width: Size;
 

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import path from 'node:path';
 
 import fs from 'fs-extra';
@@ -524,7 +525,7 @@ const dir = path.join(__dirname, '../../output');
 (async () => {
   await new Promise(r => setTimeout(r, 100));
 
-  const allBodyParts = [zougui.body, ...zougui.body.allParts()];
+  const allBodyParts = [zougui.body, ...zougui.body.getAllParts()];
   const iterations = 1;
 
   console.log('body parts:', allBodyParts.length);
@@ -595,4 +596,17 @@ function testPerf(queryParts: string[], iterations: number, exec: () => unknown)
   console.time(timeLabel);
   for (let i = iterations; i; i--) exec();
   console.timeEnd(timeLabel);
+}
+
+
+const array1 = ['some', undefined, 'value'];
+const array2 = array1.map(item => `text: ${item}`);
+
+
+const lowMoney = (count) => {
+  return 550 * count + 240 * count + 180 * count;
+}
+
+const mediumMoney = count => {
+  return 4000 * count + 220 * count + 350 * count;
 }

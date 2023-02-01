@@ -1,7 +1,12 @@
+import { constructionDataSchema } from './schemas';
 import { Liquid, LiquidData } from '../liquid';
 import { construct } from '../../utils';
 
 export class Wearable {
+  static readonly schemas = {
+    constructionData: constructionDataSchema,
+  } as const;
+
   name: string;
   colors: string[];
   stains: Liquid[];

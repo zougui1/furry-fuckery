@@ -1,8 +1,13 @@
-import { Identity, IdentityData } from './Identity';
+import { constructionDataSchema } from './schemas';
+import { Identity, IdentityData } from './identity';
 import { BodyPart, BodyPartData } from './body-part';
 import { Gender, Species, Sexuality, Pronouns } from '../data';
 
 export class Entity {
+  static readonly schemas = {
+    constructionData: constructionDataSchema,
+  } as const;
+
   readonly identity: Identity;
   body: BodyPart;
 

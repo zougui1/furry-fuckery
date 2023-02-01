@@ -1,4 +1,10 @@
+import { constructionDataSchema } from './schemas';
+
 export class Liquid {
+  static readonly schemas = {
+    constructionData: constructionDataSchema,
+  } as const;
+
   name: string;
   colors: string[];
 

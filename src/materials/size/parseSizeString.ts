@@ -1,7 +1,7 @@
 import { convertSize } from './convertSize';
 import { SizeUnit, SizeStringUnit } from './SizeUnit';
 
-const reSizeString = /^(-?(?:\d+)?\.?\d+) *(centimeters?|meters?|inch|inches|foot|feet)$/;
+export const reSizeString = /^(-?(?:\d+)?\.?\d+) *(centimeters?|meters?|inch|inches|foot|feet)$/;
 
 export const parseSizeString = (str: string, targetUnit: SizeUnit): number => {
   if (str.length > 100) {

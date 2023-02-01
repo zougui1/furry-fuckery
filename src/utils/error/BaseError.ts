@@ -22,5 +22,5 @@ export class BaseError extends Error {
 export interface BaseErrorData {
   message: string;
   code: string;
-  cause?: Error | undefined;
+  cause?: unknown;
 }
