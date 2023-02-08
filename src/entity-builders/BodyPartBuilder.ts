@@ -1,13 +1,14 @@
 import { range } from 'radash';
 import { PartialDeep } from 'type-fest';
 
+import { BodyPartBuilderQuery } from './query';
 import { BodyPartType, BodyPartData } from '../entity';
 import { WearableData, LiquidData, Size, SizeString } from '../materials';
 import { Percent } from '../utils';
 
 export class BodyPartBuilder {
-  #parts: BodyPartBuilder[] = [];
-  #parent: BodyPartBuilder | undefined;
+  parts: BodyPartBuilder[] = [];
+  readonly parent: BodyPartBuilder | undefined;
   type: BodyPartType | undefined;
   colors: string[];
   tag: string | undefined;
@@ -24,7 +25,7 @@ export class BodyPartBuilder {
     this.stains = data.stains || [];
     this.width = data.width;
     this.length = data.length;
-    this.#parent = parent;
+    this.parent = parent;
 
     this.addParts(data.parts || []);
   }
@@ -54,14 +55,14 @@ export class BodyPartBuilder {
       return size;
     }
 
-    const maybeParentSize = this.#parent?.[sizeType];
+    const maybeParentSize = this.parent?.[sizeType];
 
-    if (!this.#parent || !maybeParentSize) {
+    if (!this.parent || !maybeParentSize) {
       throw this.getNoParentSizeError(sizeType);
     }
 
     const parentSize = Percent.isValidString(maybeParentSize)
-      ? this.#parent.getSize(maybeParentSize, sizeType)
+      ? this.parent.getSize(maybeParentSize, sizeType)
       : maybeParentSize;
 
     return this.computeSize(size, parentSize);
@@ -74,7 +75,7 @@ export class BodyPartBuilder {
   }
 
   private getNoParentSizeError(label: string): Error {
-    const invalidity = this.#parent
+    const invalidity = this.parent
       ? `that has a parent with no ${label}`
       : 'that has no parent';
 
@@ -111,23 +112,42 @@ export class BodyPartBuilder {
     return this;
   }
 
-  addPart(part: BodyPartBuilderData): this {
+  merge(data: MonoBodyPartBuilderData): this {
+    if (data.length) this.length = data.length;
+    if (data.width) this.width = data.width;
+    if (data.colors) this.colors = data.colors;
+    if (data.tag) this.tag = data.tag;
+
+    if (data.stains) this.addStains(data.stains);
+    if (data.parts) this.addParts(data.parts);
+    if (data.wearables) this.addWearables(data.wearables);
+
+    return this;
+  }
+
+  createPart(part: MonoBodyPartBuilderData): BodyPartBuilder;
+  createPart(part: MultiBodyPartBuilderData): BodyPartBuilder[];
+  createPart(part: BodyPartBuilderData): BodyPartBuilder | BodyPartBuilder[] {
     if (!('count' in part)) {
-      this.#parts.push(new BodyPartBuilder(part, this));
-      return this;
+      const partBuilder = new BodyPartBuilder(part, this);
+      this.parts.push(partBuilder);
+      return partBuilder;
     }
 
     const { count, tags, ...countlessPart } = part;
 
     const parts = [...range(part.count - 1)].map((index) => {
-      return {
+      return this.createPart({
         ...countlessPart,
         tag: tags?.[index],
-      };
+      });
     });
 
-    this.addParts(parts);
+    return parts;
+  }
 
+  addPart(part: BodyPartBuilderData): this {
+    this.createPart(part);
     return this;
   }
 
@@ -142,10 +162,10 @@ export class BodyPartBuilder {
   toObject(): PartialBodyPartData {
     const colors = this.colors.length
       ? this.colors
-      : this.#parent?.colors;
+      : this.parent?.colors;
 
     return {
-      parts: this.#parts.map(part => part.toObject()),
+      parts: this.parts.map(part => part.toObject()),
       colors: colors || [],
       tag: this.tag,
       type: this.type,
@@ -154,6 +174,54 @@ export class BodyPartBuilder {
       width: this.width ? this.getSize(this.width, 'width') : undefined,
       length: this.length ? this.getSize(this.length, 'length') : undefined,
     };
+  }
+
+  //#region query
+  query(): BodyPartBuilderQuery {
+    return new BodyPartBuilderQuery(this);
+  }
+
+  tryQuery<T>(buildQuery: (query: BodyPartBuilderQuery) => T): TryQueryResult<T> {
+    const query = this.query();
+
+    try {
+      const result = buildQuery(query);
+      return [null, result];
+    } catch (error) {
+      if (BodyPartBuilderQuery.Error.is(error)) {
+        return [error, null];
+      }
+
+      const queryError = query.createError({
+        message: 'Body part not found',
+        code: BodyPartBuilderQuery.Error.Code.Unknown,
+        cause: error,
+      });
+
+      return [queryError, null];
+    }
+  }
+
+  findPart(predicate: (bodyPart: BodyPartBuilder) => unknown): BodyPartBuilder | undefined {
+    for (const part of this.parts) {
+      if (predicate(part)) {
+        return part;
+      }
+
+      const maybeSubPart = part.findPart(predicate);
+
+      if (maybeSubPart) {
+        return maybeSubPart;
+      }
+    }
+  }
+  //#endregion
+
+  getAllParts(): BodyPartBuilder[] {
+    return [
+      ...this.parts,
+      ...this.parts.flatMap(part => part.getAllParts()),
+    ];
   }
 }
 
@@ -188,3 +256,10 @@ export type BodyPartBuilderData = MonoBodyPartBuilderData | MultiBodyPartBuilder
 export interface PartialBodyPartData extends PartialDeep<Omit<BodyPartData, 'parts'>> {
   parts?: PartialBodyPartData[] | undefined;
 }
+
+export type TryQueryResult<T> = (
+  // error
+  | [error: InstanceType<typeof BodyPartBuilderQuery.Error>, result: null]
+  // success
+  | [error: null, result: T]
+)

@@ -1,1 +1,1 @@
-export * from './DragonBuilder';
+export * from './dragon/DragonBuilder';

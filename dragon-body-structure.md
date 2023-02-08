@@ -1,0 +1,34 @@
+# Common dragon body structure
+
+- body
+  - belly: length 16.13%
+  - chest: length 4.84%
+    - shoulders (2): length 100%
+      - arm: length 210%
+        - paw: length 20%
+          - digits (3 | 4): length 30%
+            - claw: length 40%+
+    - neck: length 22.58%
+      - head: length 8.06%
+        - horns (2): length 90%
+        - snout: length 80%
+          - nose: length 20%
+            - nostrils (2): length 50%
+          - jaw: length 100%
+            - maw: length 100%
+              - teeth (many!): length 8%
+              - tongue: length 140%
+  - crotch: length 10%
+    - [vagina]: length 70%
+    - [slit | sheath]: lentgh 70%
+      - penis: length 230%
+    - tail: length 48.39%
+      - tailhole: length 1%
+  - hips (2)
+      - leg
+        - paw
+          - digits (3 | 4)
+            - claw
+  - back
+    - wings (2)
+      - claw

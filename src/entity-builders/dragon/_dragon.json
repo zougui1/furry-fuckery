@@ -1,0 +1,177 @@
+{
+  "identity": {
+    "name": "Zougui",
+    "gender": "male",
+    "pronouns": {
+      "subject": "he",
+      "object": "him",
+      "possessive": "his",
+      "possessivePronoun": "his",
+      "reflexive": "himself"
+    },
+    "species": "dragon",
+    "sexuality": "pansexual"
+  },
+  "body": {
+    "shape": {
+      "length": {
+        "value": 4000,
+        "unit": "centimeter"
+      },
+      "width": {
+        "value": 300,
+        "unit": "centimeter"
+      }
+    },
+    "parts": [
+      {
+        "shape": {
+          "length": {
+            "value": 600,
+            "unit": "centimeter"
+          },
+          "width": {
+            "value": 50,
+            "unit": "centimeter"
+          }
+        },
+        "parts": [
+          {
+            "shape": {
+              "length": {
+                "value": 90,
+                "unit": "centimeter"
+              },
+              "width": {
+                "value": 60,
+                "unit": "centimeter"
+              }
+            },
+            "parts": [
+              {
+                "shape": {
+                  "length": {
+                    "value": 100,
+                    "unit": "centimeter"
+                  },
+                  "width": {
+                    "value": 60,
+                    "unit": "centimeter"
+                  }
+                },
+                "parts": [],
+                "type": "horn",
+                "colors": [],
+                "wearables": [],
+                "stains": []
+              },
+              {
+                "shape": {
+                  "length": {
+                    "value": 100,
+                    "unit": "centimeter"
+                  },
+                  "width": {
+                    "value": 60,
+                    "unit": "centimeter"
+                  }
+                },
+                "parts": [],
+                "type": "horn",
+                "colors": [],
+                "wearables": [],
+                "stains": []
+              },
+              {
+                "shape": {
+                  "length": {
+                    "value": 100,
+                    "unit": "centimeter"
+                  },
+                  "width": {
+                    "value": 60,
+                    "unit": "centimeter"
+                  }
+                },
+                "parts": [
+                  {
+                    "shape": {
+                      "length": {
+                        "value": 100,
+                        "unit": "centimeter"
+                      },
+                      "width": {
+                        "value": 60,
+                        "unit": "centimeter"
+                      }
+                    },
+                    "parts": [
+                      {
+                        "shape": {
+                          "length": {
+                            "value": 100,
+                            "unit": "centimeter"
+                          },
+                          "width": {
+                            "value": 60,
+                            "unit": "centimeter"
+                          }
+                        },
+                        "parts": [],
+                        "type": "nostril",
+                        "colors": [],
+                        "wearables": [],
+                        "stains": []
+                      },
+                      {
+                        "shape": {
+                          "length": {
+                            "value": 100,
+                            "unit": "centimeter"
+                          },
+                          "width": {
+                            "value": 60,
+                            "unit": "centimeter"
+                          }
+                        },
+                        "parts": [],
+                        "type": "nostril",
+                        "colors": [],
+                        "wearables": [],
+                        "stains": []
+                      }
+                    ],
+                    "type": "nose",
+                    "colors": [],
+                    "wearables": [],
+                    "stains": []
+                  }
+                ],
+                "type": "snout",
+                "colors": [],
+                "wearables": [],
+                "stains": []
+              }
+            ],
+            "type": "head",
+            "colors": [],
+            "wearables": [],
+            "stains": []
+          }
+        ],
+        "type": "neck",
+        "colors": [
+          "grey"
+        ],
+        "wearables": [],
+        "stains": []
+      }
+    ],
+    "type": "body",
+    "colors": [
+      "grey"
+    ],
+    "wearables": [],
+    "stains": []
+  }
+}

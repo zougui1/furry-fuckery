@@ -3,7 +3,7 @@ import path from 'node:path';
 import fs from 'fs-extra';
 
 import { DragonBuilder } from './DragonBuilder';
-import { Gender, Sexuality, Species } from '../data';
+import { Gender, Sexuality, Species } from '../../data';
 
 describe('DragonBuilder', () => {
   describe('toEntity', () => {
@@ -21,38 +21,12 @@ describe('DragonBuilder', () => {
           width: '3 meters',
           colors: ['grey'],
         })
-        .setNeck({
-          length: '15%',
-          width: '0.5 meter',
-          // hydra fuck yeah!
-          count: 3,
-          tags: ['left', 'middle', 'right'],
-
-          head: {
-            length: '15%',
-            width: '0.6 meter',
-
-            horns: {
-              length: '1 meter',
-              width: '0.6 meter',
-            },
-
-            snout: {
-              length: '1 meter',
-              width: '0.6 meter',
-
-              nose: {
-                length: '1 meter',
-                width: '0.6 meter',
-
-                nostrils: {
-                  length: '1 meter',
-                  width: '0.6 meter',
-                },
-              },
-            },
-          },
-        })
+        .setNeck({ length: '15%', width: '0.5 meter' })
+        .setHead({ length: '15%', width: '0.6 meter' })
+        .setHorns({ length: '1 meter', width: '0.6 meter' })
+        .setSnout({ length: '1 meter', width: '0.6 meter' })
+        .setNose({ length: '1 meter', width: '0.6 meter' })
+        .setNostrils({ length: '1 meter', width: '0.6 meter' })
         .toEntity();
 
       expect(dragon.name).toBe(name);
@@ -62,7 +36,12 @@ describe('DragonBuilder', () => {
 
       // if you want to see the build entity
       //! DO NOT PUSH THIS FILE
-      // fs.writeJsonSync(path.join(__dirname, 'dragon.json'), dragon, { spaces: 2 });
+      fs.writeJsonSync(path.join(__dirname, 'dragon.json'), dragon, { spaces: 2 });
+
+      const expected = fs.readJsonSync(path.join(__dirname, '_dragon.json'));
+      const received = fs.readJsonSync(path.join(__dirname, 'dragon.json'));
+
+      expect(received).toEqual(expected);
     });
   });
 });
