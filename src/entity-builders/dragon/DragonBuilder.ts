@@ -5,7 +5,7 @@ import { EntityBuilder, KnownBodyPartData } from '../EntityBuilder';
 import {
   BodyPartBuilderData,
   MultiBodyPartBuilderData,
-} from '../BodyPartBuilder';
+} from '../body-part-builder/BodyPartBuilder';
 import { BodyPart, BodyPartType } from '../../entity';
 import { Species } from '../../data';
 

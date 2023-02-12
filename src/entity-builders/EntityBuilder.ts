@@ -1,6 +1,6 @@
 import { PartialDeep } from 'type-fest';
 
-import { BodyPartBuilder } from './BodyPartBuilder';
+import { BodyPartBuilder } from './body-part-builder/BodyPartBuilder';
 import { Entity, IdentityData, BodyPartData, BodyPartType } from '../entity';
 import { Gender, Sexuality, Species } from '../data';
 

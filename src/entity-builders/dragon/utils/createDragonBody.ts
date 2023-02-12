@@ -1,4 +1,4 @@
-import { BodyPartBuilder, MonoBodyPartBuilderData } from '../../BodyPartBuilder';
+import { BodyPartBuilder, MonoBodyPartBuilderData } from '../../body-part-builder/BodyPartBuilder';
 import { BodyPart } from '../../../entity';
 
 const dummySize: Pick<MonoBodyPartBuilderData, 'length' | 'width'> = {

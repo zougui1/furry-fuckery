@@ -1,7 +1,7 @@
 import { BodyPartBuilderQueryError, BodyPartBuilderQueryErrorData } from './BodyPartBuilderQueryError';
-import type { BodyPartBuilder } from '../BodyPartBuilder';
+import type { BodyPartBuilder } from '../body-part-builder/BodyPartBuilder';
 import { BodyPartType } from '../../entity';
-import { CriteriasBuilder, CriteriaType, StringCriteriaStrategy } from '../../utils/query';
+import { CriteriasBuilder, CriteriaType, StringCriteriaStrategy } from '../../utils/criteria';
 
 export class BodyPartBuilderQuery {
   static readonly Error = BodyPartBuilderQueryError;
