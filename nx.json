@@ -1,0 +1,36 @@
+{
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx/tasks-runners/default",
+      "options": {
+        "cacheableOperations": [
+          "compile",
+          "build",
+          "test",
+          "test:cov"
+        ]
+      }
+    }
+  },
+  "targetDefaults": {
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "{projectRoot}/**/*.ts",
+        "{projectRoot}/**/jest.config.*",
+        "{projectRoot}/**/tsconfig.json",
+        "!{projectRoot}/**/*.spec.ts"
+      ],
+      "outputs": [
+        "{projectRoot}/lib"
+      ]
+    },
+    "test:cov": {
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  }
+}

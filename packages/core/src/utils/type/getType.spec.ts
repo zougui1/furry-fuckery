@@ -1,5 +1,5 @@
 import { getType } from './getType';
-
+const t = () => {}
 describe('getType', () => {
   it('should return the string "string" when the value is a string', () => {
     const value = 'Zougui';

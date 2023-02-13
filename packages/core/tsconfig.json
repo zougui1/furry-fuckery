@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
     "composite": true,
     "module": "commonjs",
     "forceConsistentCasingInFileNames": true,
@@ -23,6 +22,6 @@
     "target": "ESNext",
     "types": ["jest"]
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["src/**/*.spec.*"]
+  "include": ["**/*.ts"],
+  "exclude": ["**/*.spec.*", "./lib/**/*"]
 }

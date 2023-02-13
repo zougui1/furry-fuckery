@@ -17,4 +17,5 @@ module.exports = {
       statements: 70,
     },
   },
+  coverageDirectory: '../coverage'
 };

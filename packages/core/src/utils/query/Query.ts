@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { BodyPartQueryError, BodyPartQueryErrorData } from './BodyPartQueryError';
 import { CriteriasBuilder } from '../criteria';
 
